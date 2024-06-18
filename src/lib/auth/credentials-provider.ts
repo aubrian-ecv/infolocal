@@ -2,11 +2,10 @@ import crypto from "crypto";
 import { nanoid } from "nanoid";
 import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { prisma } from "../prisma";
 
-const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+const PASSWORD_REGEX = /^(?=.*[A-Za-z]).{8,}$/;
 
 export const validatePassword = (password: string) => {
   return PASSWORD_REGEX.test(password);
@@ -37,7 +36,7 @@ export const getCredentialsProvider = () => {
       // Add logic here to look up the user from the credentials supplied
       const passwordHash = hashStringWithSalt(
         String(credentials.password),
-        process.env.NEXTAUTH_SECRET ?? ""
+        process.env.NEXTAUTH_SECRET!,
       );
 
       const user = await prisma.user.findFirst({
@@ -103,15 +102,15 @@ export const credentialsSignInCallback =
       },
     });
 
-    const cookieList = cookies();
+    // const cookieList = cookies();
 
-    cookieList.set(tokenName, uuid, {
-      expires: expireAt,
-      path: "/",
-      sameSite: "lax",
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
+    // cookieList.set(tokenName, uuid, {
+    //   expires: expireAt,
+    //   path: "/",
+    //   sameSite: "lax",
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    // });
 
     return;
   };

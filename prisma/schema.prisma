@@ -8,26 +8,6 @@ datasource db {
     shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model Account {
-  id                    String  @id @default(nanoid(11))
-  userId                String
-  type                  String
-  provider              String
-  providerAccountId     String
-  refreshTokenExpiresIn String?
-  refresh_token         String?
-  access_token          String?
-  expires_at            Int?
-  token_type            String?
-  scope                 String?
-  id_token              String?
-  session_state         String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
 model Session {
   id           String   @id @default(nanoid(11))
   sessionToken String   @unique @map("session_token")
@@ -43,7 +23,6 @@ model User {
   id            String    @id @default(nanoid(11))
   name          String?
   email         String    @unique
-  emailVerified DateTime?
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -52,5 +31,4 @@ model User {
   passwordHash String?
 
   sessions  Session[]
-  accounts  Account[]
 }

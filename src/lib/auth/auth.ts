@@ -4,9 +4,10 @@ import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 import { prisma } from "../prisma";
 import { credentialsOverrideJwt, credentialsSignInCallback, getCredentialsProvider } from "./credentials-provider";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 
-export const { handlers, signIn, signOut, auth } = NextAuth((req) => ({
+export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => ({
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
@@ -29,7 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth((req) => ({
     },
   },
   events: {
-    signIn: credentialsSignInCallback(req),
+    signIn: credentialsSignInCallback(req)
   },
   providers: [
     getCredentialsProvider()
