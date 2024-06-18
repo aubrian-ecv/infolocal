@@ -38,4 +38,4 @@ next-env.d.ts
 public/*.js.map
 public/workbox-*.js
 
-prisma/migrat
+prisma/migrations
