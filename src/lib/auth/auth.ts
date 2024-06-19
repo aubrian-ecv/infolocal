@@ -4,7 +4,6 @@ import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 import { prisma } from "../prisma";
 import { credentialsOverrideJwt, credentialsSignInCallback, getCredentialsProvider } from "./credentials-provider";
-import CredentialsProvider from "next-auth/providers/credentials";
 
 
 export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => ({
@@ -14,7 +13,7 @@ export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => (
   },
   secret: process.env.AUTH_SECRET,
   callbacks: {
-    session(params) {
+    session(params) {      
       if (params.newSession) return params.session;
 
       const typedParams = params as unknown as {
@@ -28,12 +27,17 @@ export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => (
 
       return typedParams.session;
     },
+    jwt({ token, user }) {
+      if (user) {
+        return { ...token, id: user.id }; // Save id to token as docs says: https://next-auth.js.org/configuration/callbacks
+      }
+      return token;
+    },
   },
   events: {
     signIn: credentialsSignInCallback(req)
   },
   providers: [
     getCredentialsProvider()
-  ],
-  jwt: credentialsOverrideJwt
+  ]
 }));

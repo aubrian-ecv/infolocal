@@ -4,6 +4,7 @@ import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextRequest } from "next/server";
 import { prisma } from "../prisma";
+import { saveSessionCookie } from "./cookie.action";
 
 const PASSWORD_REGEX = /^(?=.*[A-Za-z]).{8,}$/;
 
@@ -33,6 +34,8 @@ export const getCredentialsProvider = () => {
     async authorize(credentials) {
       if (!credentials.email || !credentials.password) return null;
 
+      console.log("CREDENTIALS", credentials);
+      
       // Add logic here to look up the user from the credentials supplied
       const passwordHash = hashStringWithSalt(
         String(credentials.password),
@@ -48,7 +51,7 @@ export const getCredentialsProvider = () => {
 
       if (user) {
         return {
-          id: user.id,
+          id: `${user.id}`,
           email: user.email,
           name: user.name,
           image: user.image,
@@ -96,28 +99,20 @@ export const credentialsSignInCallback =
     await prisma.session.create({
       data: {
         sessionToken: uuid,
-        userId: user.id ?? "",
+        userId: parseInt(user.id ?? ""),
         // expires in 2 weeks
         expires: expireAt,
       },
     });
 
-    // const cookieList = cookies();
-
-    // cookieList.set(tokenName, uuid, {
-    //   expires: expireAt,
-    //   path: "/",
-    //   sameSite: "lax",
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === "production",
-    // });
+    saveSessionCookie(tokenName, uuid, expireAt)
 
     return;
   };
 
 // This override cancel JWT strategy for password. (it's the default one)
 export const credentialsOverrideJwt: JwtOverride = {
-  encode() {
+  async encode() {    
     return "";
   },
   async decode() {
