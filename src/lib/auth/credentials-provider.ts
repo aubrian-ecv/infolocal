@@ -34,8 +34,6 @@ export const getCredentialsProvider = () => {
     async authorize(credentials) {
       if (!credentials.email || !credentials.password) return null;
 
-      console.log("CREDENTIALS", credentials);
-      
       // Add logic here to look up the user from the credentials supplied
       const passwordHash = hashStringWithSalt(
         String(credentials.password),
@@ -47,6 +45,9 @@ export const getCredentialsProvider = () => {
           email: credentials.email,
           passwordHash: passwordHash,
         },
+        include: {
+          roles: true
+        }
       });
 
       if (user) {
@@ -55,6 +56,7 @@ export const getCredentialsProvider = () => {
           email: user.email,
           name: user.name,
           image: user.image,
+          roles: user.roles
         };
       } else {
         return null;

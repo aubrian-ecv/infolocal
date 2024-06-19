@@ -14,7 +14,12 @@
 
 /* Initiate Batch SDK opt-in UI configuration (native prompt) */
 var batchSDKUIConfig = {
-  native: {},
+  banner: {
+    autoShow: true,
+    text: "We use push notifications to send you the latest news and updates.",
+    fixed: true,
+    btnSub: "Susbcribe",
+  }
 };
 
 /* Use a specific configuration for Firefox and Safari browsers (custom prompt) */

@@ -13,23 +13,27 @@ export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => (
   },
   secret: process.env.AUTH_SECRET,
   callbacks: {
-    session(params) {      
-      if (params.newSession) return params.session;
+    session({ session, token, newSession }) {      
+      if (newSession) return session;      
 
-      const typedParams = params as unknown as {
-        session: Session;
-        user?: User;
-      };
-
-      if (!typedParams.user) return typedParams.session;
-
-      typedParams.user.passwordHash = null;
-
-      return typedParams.session;
+      if (token) {
+        session.user = {
+          // @ts-ignore
+          id: token.id,
+          email: token.email!,
+          name: token.name!,
+          image: token.picture!,
+          // @ts-ignore
+          roles: token.roles.map(role => role.name)
+        };
+      }
+      
+      return session;
     },
     jwt({ token, user }) {
       if (user) {
-        return { ...token, id: user.id }; // Save id to token as docs says: https://next-auth.js.org/configuration/callbacks
+        // @ts-ignore
+        return { ...token, id: user.id, roles: user.roles }; // Save id to token as docs says: https://next-auth.js.org/configuration/callbacks
       }
       return token;
     },
