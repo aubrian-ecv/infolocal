@@ -6,7 +6,7 @@ export const useGeoLoc = () => {
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             setLoc(position)
-        })
+        }, null, { enableHighAccuracy: true })
     }, []);
 
     return loc;

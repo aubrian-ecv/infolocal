@@ -39,3 +39,13 @@ model Role {
   name        String
   users       User[]
 }
+
+model Article {
+  id              Int      @id @default(autoincrement())
+  title           String
+  content         String
+  publicationDate DateTime
+  imageUrl        String
+  imageCaption    String
+  keywords        String
+}
