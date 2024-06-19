@@ -37,11 +37,11 @@ if (
 
 /* Finalize the Batch SDK setup */
 batchSDK('setup', {
-  apiKey: '1CDAD62D38AD4E0CACAC117DF4F74542',
-  subdomain: 'vercel3',
-  authKey: '2.lKNhn8jUhh/c4/apowk1jtkksfUribj7Hx+KGVdvgYk=',
-  // dev: true, // remove this for prod
-  vapidPublicKey: 'BCMrV+c5l1BUNd4TDeb7WNpB55Z3WZoePJWWQwKx/u3XUnb1g+F8fPXEiMbXKPkt3qMuD6kx++gOUvB+5d1Mn2Q=',
+  apiKey: '5EEFD6DCE1E246A3BF8FB8C5D93695A8',
+  subdomain: 'vercel4',
+  authKey: '2.XLXUuKOUABED6fGZkJlqg1+EuIGVeZXmCbkaA7XTFDk=',
+  //dev: true, // remove this for prod
+  vapidPublicKey: 'BBqhs9fD6dxcj+BA64T2EDBFsz3sSWw1vfVTycfoQ00+Lr1JfEV84POJ6T6JQqByNBKmsTW+KgJ5bTPDvFnAVh8=',
   ui: batchSDKUIConfig,
   // defaultIcon: 'https://path.to/my/logo-192/png', // for Chrome desktop
   // smallIcon: 'https://path.to/my/icon-96.png', // for Chrome Android
