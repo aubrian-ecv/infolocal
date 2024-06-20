@@ -16,27 +16,31 @@ import { signUpAction } from "./signup.action";
 import { LoginCredentialsFormScheme } from "./signup.schema";
 import type { LoginCredentialsFormType } from "./signup.schema";
 import { signIn } from "next-auth/react";
+import { useMutation } from "@tanstack/react-query";
 
 export const SignUpCredentialsForm = () => {
     const form = useZodForm({
         schema: LoginCredentialsFormScheme,
     });
 
-    const submitMutation = async (values: LoginCredentialsFormType) => {
-        const { serverError } = await signUpAction(values);
+    const submitMutation = useMutation({
+        mutationFn:
+            async (values: LoginCredentialsFormType) => {
+                const { serverError } = await signUpAction(values);
 
-        if (serverError) {
-            toast.error(serverError);
-            return;
-        }
+                if (serverError) {
+                    toast.error(serverError);
+                    return;
+                }
 
-        await signIn("credentials", {
-            email: values.email,
-            password: values.password,
-            callbackUrl: "/",
-            redirect: true
-        });
-    };
+                await signIn("credentials", {
+                    email: values.email,
+                    password: values.password,
+                    callbackUrl: "/",
+                    redirect: true
+                });
+            }
+    });
 
     async function onSubmit(values: LoginCredentialsFormType) {
         if (values.password !== values.verifyPassword) {
@@ -46,7 +50,7 @@ export const SignUpCredentialsForm = () => {
             return;
         }
 
-        return submitMutation(values);
+        return submitMutation.mutate(values);
     }
 
     return (
