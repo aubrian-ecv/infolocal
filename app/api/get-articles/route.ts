@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { XMLParser } from "fast-xml-parser";
 
 export async function GET(request: Request) {
+  const r = request.url;
   const xmlData = await fetch(
     "https://www.lavoixdunord.fr/sites/default/files/sitemaps/www_lavoixdunord_fr/sitemapnews-0.xml"
   );
