@@ -5,7 +5,7 @@ import { CampaignForm } from "./CampaignForm";
 export default async function RoutePage(props: PageParams<{}>) {
     return (
         <section className="space-y-6">
-            <Typography variant={"h1"}>Création d'une notification</Typography>
+            <Typography variant={"h1"}>Création d&apos;une notification</Typography>
             <CampaignForm />
         </section>
     )

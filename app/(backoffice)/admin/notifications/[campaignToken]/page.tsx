@@ -12,7 +12,7 @@ export default async function RoutePage(props: PageParams<{ campaignToken: strin
 
     return (
         <section className="space-y-6">
-            <Typography variant={"h1"}>Statistiques de la campagne "{campaign.name}"</Typography>
+            <Typography variant={"h1"}>Statistiques de la campagne &quot;{campaign.name}&quot;</Typography>
             <CampaignKPI campaignStats={campaignStats} />
             <CampaignStatChart
                 campaignStats={campaignStats}
