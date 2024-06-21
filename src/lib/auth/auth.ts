@@ -43,5 +43,8 @@ export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => (
   },
   providers: [
     getCredentialsProvider()
-  ]
+  ],
+  pages: {
+    signIn: "/auth/signin"
+  }
 }));
