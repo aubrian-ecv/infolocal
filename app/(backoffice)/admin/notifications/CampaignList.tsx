@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCampaignsList } from "./campaign.queries";
 import { Loader } from "@/components/ui/loader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import dayjs from "@/lib/dayjs";
+import dayjs from "@/lib/date/date-format-batch";
 import { CheckCircleIcon, Clock, Pen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
