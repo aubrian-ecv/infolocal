@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Nohemi";
+  src: local("Nohemi"), 
+  url("../src/assets/fonts/Nohemi.woff2"),
+  url("../src/assets/fonts/Nohemi.ttf");
+  font-weight: 300;
+}
+
+@layer base {
+  body {
+    @apply font-nohemi font-normal;
+  }
+}
+
 .admin-grid {
   --header-height: 50px;
   display: grid;

@@ -37,6 +37,9 @@ const config = {
           DEFAULT: "#FF0000",
         },
       },
+      fontFamily: {
+        nohemi: ["Nohemi", "sans-serif"],
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
