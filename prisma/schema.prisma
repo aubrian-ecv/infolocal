@@ -1,17 +1,17 @@
 generator Client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    url = env("DATABASE_URL")
-    shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Session {
   id           String   @id @default(nanoid(11))
   sessionToken String   @unique @map("session_token")
-  userId       Int   @map("user_id")
+  userId       Int      @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now()) @map("created_at")
@@ -20,24 +20,24 @@ model Session {
 }
 
 model User {
-  id            Int    @id @default(autoincrement())
-  name          String?
-  email         String    @unique
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id        Int      @id @default(autoincrement())
+  name      String?
+  email     String   @unique
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // For the Credentials provider
-  passwordHash  String?
+  passwordHash String?
 
-  sessions      Session[]
-  roles         Role[]
+  sessions Session[]
+  roles    Role[]
 }
 
 model Role {
-  id         Int    @id @default(autoincrement())
-  name        String
-  users       User[]
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[]
 }
 
 model Article {
@@ -48,4 +48,30 @@ model Article {
   imageUrl        String
   imageCaption    String
   keywords        String
+}
+
+model Survey {
+  id       Int             @id @default(autoincrement())
+  question String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt @default(now())
+  published Boolean         @default(false)
+  options  SurveyOptions[]
+  results  SurveyResults[]
+}
+
+model SurveyOptions {
+  id       Int             @id @default(autoincrement())
+  label    String
+  SurveyId Int
+  survey   Survey          @relation(fields: [SurveyId], references: [id])
+  results  SurveyResults[]
+}
+
+model SurveyResults {
+  id       Int           @id @default(autoincrement())
+  SurveyId Int
+  survey   Survey        @relation(fields: [SurveyId], references: [id])
+  optionId Int
+  option   SurveyOptions @relation(fields: [optionId], references: [id])
 }
