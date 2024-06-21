@@ -11,10 +11,19 @@ export async function GET(request: Request) {
   const parser = new XMLParser();
   let jsonObj = parser.parse(xmlText);
 
+  if (!jsonObj.urlset.url)
+    return new Response(JSON.stringify("There was an error", null, 2), {
+      status: 500,
+    });
+
   await prisma.$queryRaw`TRUNCATE TABLE Article`;
   const importStatus = await prisma.article.createMany({
     data: jsonObj.urlset.url
-      .filter((articleData: any) => articleData["image:image"]?.["image:loc"] && articleData["image:image"]?.["image:caption"])
+      .filter(
+        (articleData: any) =>
+          articleData["image:image"]?.["image:loc"] &&
+          articleData["image:image"]?.["image:caption"]
+      )
       .map((articleData: any) => ({
         title: articleData["news:news"]["news:title"],
         content: articleData["loc"],
