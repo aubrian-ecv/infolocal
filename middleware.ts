@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
     if (request.url.includes('/admin')) {
         try {
             const user = await requiredAuth() as { id: number, email: string, name?: string, image?: string, roles?: string[] };
-            
+
             if (!user.roles?.includes('SUPERADMIN') && !user.roles?.includes('JOURNALISTE')) {
                 return NextResponse.json({ error: 'Page not found' }, { status: 404 })
             }        

@@ -1,7 +1,7 @@
 import { Typography } from "@/components/ui/typography";
 import { Campaign, CampaignStats } from "@/types/campaign";
 import type { PageParams } from "@/types/next";
-import { getCampaign, getCampaignStats } from "../campaign.action";
+import { getCampaign, getCampaignStats } from "../campaign.queries";
 import { CampaignKPI } from "./CampaignKPI";
 import { CampaignStatChart } from "./CampaignStatChart";
 

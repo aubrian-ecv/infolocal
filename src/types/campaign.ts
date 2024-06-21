@@ -15,7 +15,8 @@ export type Campaign = {
         "end_date": string,
         "repeat_unit": "DAILY" | "WEEKLY" | "MONTHLY",
         "repeat_frequency": number
-    } | null
+    } | null,
+    "capping": number
 }
 
 export type CampaignStats = {

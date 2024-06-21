@@ -4,8 +4,11 @@ import type { PageParams } from "@/types/next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { CampaignList } from "./CampaignList";
+import { getCampaignsList } from "./campaign.queries";
 
 export default async function RoutePage(props: PageParams<{}>) {
+
+    const campaigns = await getCampaignsList();
 
     return (
         <section>
@@ -18,7 +21,7 @@ export default async function RoutePage(props: PageParams<{}>) {
                 </Button>
             </div>
             <Suspense>
-                <CampaignList  />
+                <CampaignList campaigns={campaigns} />
             </Suspense>
         </section>
     )

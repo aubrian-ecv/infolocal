@@ -1,7 +1,7 @@
 import { Typography } from "@/components/ui/typography";
 import type { PageParams } from "@/types/next";
 import { CampaignForm } from "../../new/CampaignForm";
-import { getCampaign } from "../../campaign.action";
+import { getCampaign } from "../../campaign.queries";
 import { Campaign } from "@/types/campaign";
 
 export default async function RoutePage(props: PageParams<{ campaignToken: string }>) {

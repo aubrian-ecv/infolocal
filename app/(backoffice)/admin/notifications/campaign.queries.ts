@@ -1,4 +1,4 @@
-import { CampaignFormType } from "./new/campaign.schema";
+import { CampaignFormType } from "./campaign.schema";
 
 export async function getCampaignStats(token: string) {
   return await fetch(
