@@ -71,7 +71,10 @@ export const CampaignForm = (props: CampaignFormProps) => {
         if (values.push_time !== "now") {
             values.push_time = dayjs(values.push_time).add(timezoneOffset, "minutes").format("YYYY-MM-DDTHH:mm:ss");
         }
-        alert('ICI')
+        if (values.recurrence) {
+            values.recurrence.end_date = dayjs(values.recurrence.end_date).add(timezoneOffset, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+        }
+        
         return submitMutation.mutate(values);
     }
 
