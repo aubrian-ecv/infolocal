@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { CampaignStats } from "@/types/campaign";
 import { useQuery } from "@tanstack/react-query";
-import { getCampaignStats } from "../campaign.action";
+import { getCampaignStats } from "../campaign.queries";
 
 export type CampaignKPIProps = {
     campaignStats: CampaignStats

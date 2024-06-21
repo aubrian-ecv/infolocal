@@ -8,7 +8,7 @@ import { Suspense } from "react";
 import { SignUpCredentialsForm } from "./SignUpCredentialsForm";
 import { Typography } from "@/components/ui/typography";
 
-export default async function AuthSignInPage() {
+export default async function AuthSignUpPage() {
   const user = await auth();
 
   if (user) {

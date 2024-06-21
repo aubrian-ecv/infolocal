@@ -15,7 +15,8 @@ export const CampaignFormScheme = z.object({
     end_date: z.string({ required_error: "La date de fin est obligatoire." }),
     repeat_unit: z.enum(["DAILY", "WEEKLY", "MONTHLY"], { required_error: "L'unité de répétition est obligatoire." }),
     repeat_frequency: z.number({ required_error: "La fréquence est obligatoire." }),
-  }).optional()
+  }).optional(),
+  capping: z.number().default(1)
 });
 
 export type CampaignFormType = z.infer<

@@ -13,8 +13,8 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { createCampaign, updateCampaign } from "../campaign.action";
-import { CampaignFormScheme, CampaignFormType } from "./campaign.schema";
+import { createCampaign, updateCampaign } from "../campaign.queries";
+import { CampaignFormScheme, CampaignFormType } from "../campaign.schema";
 
 export type CampaignFormProps = {
     campaign?: Campaign,
@@ -45,7 +45,8 @@ export const CampaignForm = (props: CampaignFormProps) => {
                 body: props.campaign?.messages[0].body || "",
                 deeplink: props.campaign?.messages[0].deeplink || ""
             }],
-            recurrence: props.campaign?.recurrence || undefined
+            recurrence: props.campaign?.recurrence || undefined,
+            capping: props.campaign?.capping || 1
         }
     });
 
@@ -70,6 +71,7 @@ export const CampaignForm = (props: CampaignFormProps) => {
         if (values.push_time !== "now") {
             values.push_time = dayjs(values.push_time).add(timezoneOffset, "minutes").format("YYYY-MM-DDTHH:mm:ss");
         }
+        alert('ICI')
         return submitMutation.mutate(values);
     }
 
@@ -230,7 +232,20 @@ export const CampaignForm = (props: CampaignFormProps) => {
                                     <FormItem>
                                         <FormLabel>Fréquence de répétition</FormLabel>
                                         <FormControl>
-                                            <Input type="number" {...field} />
+                                            <Input type="number" {...field} onChange={(e) => field.onChange(parseInt(e.target.value))}  />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name={`capping`}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Nombre de fois qu&apos;un utilisateur peut recevoir la notification ?</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" {...field} onChange={(e) => field.onChange(parseInt(e.target.value))}  />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

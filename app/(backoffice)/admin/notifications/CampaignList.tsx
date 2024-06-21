@@ -3,22 +3,30 @@
 import { Typography } from "@/components/ui/typography";
 import { Campaign } from "@/types/campaign";
 import { useQuery } from "@tanstack/react-query";
-import { getCampaignsList } from "./campaign.action";
+import { getCampaignsList } from "./campaign.queries";
 import { Loader } from "@/components/ui/loader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import dayjs from "@/lib/dayjs";
 import { CheckCircleIcon, Clock, Pen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export type CampaignListProps = {
+    campaigns: Campaign[]
 }
 
 export const CampaignList = (props: CampaignListProps) => {
 
+    const [isSSR, setIsSSR] = useState(true);
+    useEffect(() => {
+        setIsSSR(false);
+    }, []);
+
     const { data: campaigns, isFetching } = useQuery({
         queryKey: ["campaigns"],
-        queryFn: getCampaignsList
+        queryFn: getCampaignsList,
+        initialData: props.campaigns
     });
 
     return (
@@ -36,6 +44,7 @@ export const CampaignList = (props: CampaignListProps) => {
             }
             <ul className="space-y-4 my-6" suppressHydrationWarning>
                 {
+                    !isSSR &&
                     campaigns && campaigns.map((campaign: Campaign) => (
                         <li key={campaign.campaign_token}>
                             <Card>
@@ -54,14 +63,14 @@ export const CampaignList = (props: CampaignListProps) => {
                                         )
                                     }
                                     {
-                                        campaign.live ?  dayjs(campaign.push_time).isBefore(new Date()) && (
+                                        campaign.live ? dayjs(campaign.push_time).isBefore(new Date()) && (
                                             <Button asChild variant="outline">
                                                 <Link href={`/admin/notifications/${campaign.campaign_token}`}>Voir</Link>
                                             </Button>
-                                        ) : 
-                                        <Button asChild variant="outline">
-                                            <Link href={`/admin/notifications/${campaign.campaign_token}/edit`}>Modifier</Link>
-                                        </Button>
+                                        ) :
+                                            <Button asChild variant="outline">
+                                                <Link href={`/admin/notifications/${campaign.campaign_token}/edit`}>Modifier</Link>
+                                            </Button>
                                     }
                                 </CardContent>
                             </Card>
