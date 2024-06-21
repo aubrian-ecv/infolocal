@@ -243,7 +243,7 @@ export const CampaignForm = (props: CampaignFormProps) => {
                                 name={`capping`}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Nombre de fois qu'un utilisateur peut recevoir la notification ?</FormLabel>
+                                        <FormLabel>Nombre de fois qu&apos;un utilisateur peut recevoir la notification ?</FormLabel>
                                         <FormControl>
                                             <Input type="number" {...field} onChange={(e) => field.onChange(parseInt(e.target.value))}  />
                                         </FormControl>
