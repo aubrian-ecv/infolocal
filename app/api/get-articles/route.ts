@@ -20,7 +20,7 @@ export async function GET(request: Request) {
         content: articleData["loc"],
         publicationDate: articleData["news:news"]["news:publication_date"],
         imageUrl: articleData["image:image"]["image:loc"],
-        imageCaption: articleData["image:image"]["image:caption"],
+        imageCaption: articleData["image:image"]["image:caption"] + "",
         keywords: articleData["news:news"]?.["news:keywords"] ?? "",
       })),
   });
