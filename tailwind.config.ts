@@ -39,6 +39,7 @@ const config = {
       },
       fontFamily: {
         nohemi: ["Nohemi", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
       }
     },
   },
