@@ -9,7 +9,7 @@ export type HeaderProps = {
 
 export const Header = (props: HeaderProps) => {
     return (
-        <header className="w-full bg-if_blue h-14 border-b-2 border-if_lightgrey sticky top-0">
+        <header className="w-full bg-if_blue h-14 border-b-2 border-if_lightgrey sticky top-0 z-50">
             <nav className="flex w-full px-4 py-2 justify-between">
                 <a className="my-auto h-full"><BurgerIcon className="h-full w-auto" aria-hidden="true" width={26} height={18}/></a>
                 <img src='static/img/infolocal-small-white.svg'/>
