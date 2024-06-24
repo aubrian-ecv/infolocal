@@ -30,7 +30,7 @@ export const Meteo = (props: MeteoProps) => {
 
 
     return (
-        <section className="p-4">
+        <section>
             <div className="p-4 bg-if_blue text-white rounded-md">
                 <Typography className="font-bold text-2xl">{meteoData.city.name}</Typography>
                 <div className="flex flex-row items-center gap-4">

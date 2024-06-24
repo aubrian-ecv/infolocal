@@ -16,7 +16,7 @@ export async function GET(request: Request) {
       status: 500,
     });
 
-  await prisma.$queryRaw`TRUNCATE TABLE Article`;
+  // await prisma.$queryRaw`TRUNCATE TABLE Article;`;
   const importStatus = await prisma.article.createMany({
     data: jsonObj.urlset.url
       .filter(
@@ -31,6 +31,7 @@ export async function GET(request: Request) {
         imageUrl: articleData["image:image"]["image:loc"],
         imageCaption: articleData["image:image"]["image:caption"] + "",
         keywords: articleData["news:news"]?.["news:keywords"] ?? "",
+        author: articleData["news:news"]?.["news:publication"]["news:name"] ?? "",
       })),
   });
 

@@ -51,6 +51,7 @@ model Article {
   imageCaption    String
   keywords        String
 
+  author String
   likes    Like[]
   comments Comment[]
   shares   Share[]
