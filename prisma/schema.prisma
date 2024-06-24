@@ -32,6 +32,8 @@ model User {
 
   sessions Session[]
   roles    Role[]
+  likes    Like[]
+  comments Comment[]
 }
 
 model Role {
@@ -48,16 +50,45 @@ model Article {
   imageUrl        String
   imageCaption    String
   keywords        String
+
+  author String
+  likes    Like[]
+  comments Comment[]
+  shares   Share[]
+}
+
+model Like {
+  id        Int     @id @default(autoincrement())
+  ArticleId Int
+  article   Article @relation(fields: [ArticleId], references: [id])
+  UserId    Int
+  user      User    @relation(fields: [UserId], references: [id])
+}
+
+model Comment {
+  id        Int     @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  ArticleId Int
+  article   Article @relation(fields: [ArticleId], references: [id])
+  UserId    Int
+  user      User    @relation(fields: [UserId], references: [id])
+}
+
+model Share {
+  id        Int     @id @default(autoincrement())
+  ArticleId Int
+  article   Article @relation(fields: [ArticleId], references: [id])
 }
 
 model Survey {
-  id       Int             @id @default(autoincrement())
-  question String
+  id        Int             @id @default(autoincrement())
+  question  String
   createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt @default(now())
+  updatedAt DateTime        @default(now()) @updatedAt
   published Boolean         @default(false)
-  options  SurveyOptions[]
-  results  SurveyResults[]
+  options   SurveyOptions[]
+  results   SurveyResults[]
 }
 
 model SurveyOptions {

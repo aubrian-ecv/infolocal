@@ -30,7 +30,7 @@ export const Meteo = (props: MeteoProps) => {
 
 
     return (
-        <section className="p-4">
+        <section>
             <div className="p-4 bg-if_blue text-white rounded-md">
                 <Typography className="font-bold text-2xl">{meteoData.city.name}</Typography>
                 <div className="flex flex-row items-center gap-4">
@@ -42,7 +42,7 @@ export const Meteo = (props: MeteoProps) => {
                         if (index === 0) return null;
                         return (
                             <li key={index} className="flex flex-col gap-1 items-center">
-                                <Typography className="text-sm">{dateTz(forecast.datetime, "HH:mm", "Europe/Paris")}</Typography>
+                                <Typography className="text-sm">{dateTz(forecast.datetime, "HH:mm", "Europe/Paris") as string}</Typography>
                                 <MeteoWeatherIcon weather={forecast.weather} />
                                 <Typography className="text-sm">{forecast.temp2m}°C</Typography>
                             </li>
