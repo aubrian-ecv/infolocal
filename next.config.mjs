@@ -5,6 +5,15 @@ const withPWA = withPWAInit({
 });
 
 export default withPWA({
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack", "url-loader"],
+    });
+
+    return config;
+  },
+  reactStrictMode: true,
   // Your Next.js config
   images: {
     remotePatterns: [

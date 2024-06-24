@@ -22,9 +22,6 @@ export const SurveyResultsChart = (props: SurveyResultsChartProps) => {
 
     const data = Object.values(totalCounts);
 
-    console.log(data);
-    
-
     return (
         <div className="flex items-center justify-center w-full h-96">
             <Pie
