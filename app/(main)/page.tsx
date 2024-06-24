@@ -1,16 +1,15 @@
 import { Meteo } from "@/components/features/meteo";
+import { SurveyCard } from "@/components/features/survey-card";
 import { Loader } from "@/components/ui/loader";
-import { getOldestSurvey } from "@/lib/server-actions/survey.action";
 import { Suspense } from "react";
 import { ArticleList } from "./article-list";
-import { SurveyCard } from "@/components/features/survey-card";
 
 export default async function Home() {
 
   return (
-    <main className="">
+    <main className="px-4 space-y-6">
       <Meteo />
-      <section className="px-4">
+      <section>
         <SurveyCard />
       </section>
       <Suspense fallback={<Loader />}>

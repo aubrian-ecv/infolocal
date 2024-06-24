@@ -1,3 +1,4 @@
+import { PostCard } from "@/components/features/posts/post-card"
 import { prisma } from "@/lib/prisma"
 
 export type ArticleListProps = {
@@ -10,12 +11,13 @@ export const ArticleList = async (props: ArticleListProps) => {
     })
 
     return (
-        <ul>
+        <ul className="space-y-4">
             {
                 articles.map((article) => (
-                    <li key={article.id}>
-                        {article.title}
-                    </li>
+                    <PostCard 
+                        key={article.id}
+                        article={article}
+                    />
                 ))
             }
         </ul>
