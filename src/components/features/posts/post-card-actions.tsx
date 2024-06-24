@@ -46,13 +46,13 @@ export const PostCArdActions = (props: PostCArdActionsProps) => {
     }
 
     const sharePost = async () => {
+        sharePostAction(props.article);
+        getTotalSharesForArticle(props.article).then(setTotalShares);
         await navigator.share({
             title: props.article.title,
             text: props.article.imageCaption,
             url: window.location.href
         })
-        sharePostAction(props.article);
-        getTotalSharesForArticle(props.article).then(setTotalShares);
     }
 
     return (
