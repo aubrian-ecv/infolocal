@@ -37,7 +37,8 @@ const config = {
           DEFAULT: "#FF0000",
         },
         if_blue: "#0854E8",
-        if_yellow: "#E7D110"
+        if_yellow: "#E7D110",
+        if_lightgrey: "#F3F8FF"
       },
       fontFamily: {
         nohemi: ["Nohemi", "sans-serif"],
