@@ -32,7 +32,7 @@ export const SurveyList = (props: SurveyListProps) => {
                                 </CardHeader>
                                 <CardContent className="space-y-2">
                                     <div className="flex flex-row justify-between items-center">
-                                        <Typography variant="base">Dernière modification le {dateTz(survey.updatedAt.toString(), "DD/MM/YYYY [à] HH:mm", "Europe/Paris")}</Typography>
+                                        <Typography variant="base">Dernière modification le {dateTz(survey.updatedAt.toString(), "DD/MM/YYYY [à] HH:mm", "Europe/Paris") as string}</Typography>
                                         <Typography variant="base">{survey.results.length} réponse{survey.results.length > 1 && "s"}</Typography>
                                     </div>
                                     <div className="flex flex-row justify-end items-center gap-4">
