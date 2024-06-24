@@ -36,6 +36,8 @@ const config = {
         destructive: {
           DEFAULT: "#FF0000",
         },
+        if_blue: "#0854E8",
+        if_yellow: "#E7D110"
       },
       fontFamily: {
         nohemi: ["Nohemi", "sans-serif"],
@@ -43,7 +45,7 @@ const config = {
       }
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar-hide")],
 } satisfies Config;
 
 export default config;
