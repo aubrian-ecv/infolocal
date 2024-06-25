@@ -44,7 +44,7 @@ export const PostCard = ({ article, size = "small" }: PostCardProps) => {
                     alt={article.imageCaption}
                     width={size === "small" ? 200 : 400}
                     height={size === "small" ? 200 : 300}
-                    className={cn("object-contain", size === "large" && "w-full object-cover")}
+                    className={cn("object-contain rounded-md w-1/3 h-full", size === "large" && "w-full object-cover")}
                 />
             </div>
 
