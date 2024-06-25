@@ -34,6 +34,7 @@ model User {
   roles    Role[]
   likes    Like[]
   comments Comment[]
+  bookmarks Bookmark[]
 }
 
 model Role {
@@ -55,14 +56,16 @@ model Article {
   likes    Like[]
   comments Comment[]
   shares   Share[]
+  bookmarks Bookmark[]
 }
 
 model Like {
-  id        Int     @id @default(autoincrement())
   ArticleId Int
   article   Article @relation(fields: [ArticleId], references: [id])
   UserId    Int
   user      User    @relation(fields: [UserId], references: [id])
+
+  @@id([ArticleId, UserId])
 }
 
 model Comment {
@@ -79,6 +82,15 @@ model Share {
   id        Int     @id @default(autoincrement())
   ArticleId Int
   article   Article @relation(fields: [ArticleId], references: [id])
+}
+
+model Bookmark {
+  ArticleId Int
+  article   Article @relation(fields: [ArticleId], references: [id])
+  UserId    Int
+  user      User    @relation(fields: [UserId], references: [id])
+
+  @@id([ArticleId, UserId])
 }
 
 model Survey {
