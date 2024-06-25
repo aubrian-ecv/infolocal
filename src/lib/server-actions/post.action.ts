@@ -167,3 +167,24 @@ export async function getBookmarkStatusForUser(article: Article) {
     return false;
   }
 }
+
+export async function getUserSavedPosts() {
+  try {
+    const user = await requiredAuth();
+
+    const savedPosts = await prisma.bookmark.findMany({
+      where: {
+        UserId: parseInt(user.id as unknown as string),
+      },
+      include: {
+        article: true
+      }
+    });
+
+    return savedPosts;
+  } catch (e) {
+    return {
+      error: "NOT_LOGGED_IN",
+    };
+  }
+}

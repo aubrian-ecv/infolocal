@@ -12,7 +12,8 @@ import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 export type PostCArdActionsProps = {
-    article: Article
+    article: Article,
+    refreshAfterAction?: boolean
 }
 
 export const PostCArdActions = (props: PostCArdActionsProps) => {
@@ -88,6 +89,7 @@ export const PostCArdActions = (props: PostCArdActionsProps) => {
             if (status.success) {
                 toast.success("L'article a été enregistré avec succès")
                 setIsBookmarked(true);
+                props.refreshAfterAction && router.refresh();
             }
         }
     }
@@ -103,6 +105,7 @@ export const PostCArdActions = (props: PostCArdActionsProps) => {
             if (status.success) {
                 toast.success("L'article n'est plus enregistré")
                 setIsBookmarked(false);
+                props.refreshAfterAction && router.refresh();
             }
         }
     }
