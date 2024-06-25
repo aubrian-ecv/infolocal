@@ -30,11 +30,12 @@ model User {
   // For the Credentials provider
   passwordHash String?
 
-  sessions Session[]
-  roles    Role[]
-  likes    Like[]
-  comments Comment[]
+  sessions  Session[]
+  roles     Role[]
+  likes     Like[]
+  comments  Comment[]
   bookmarks Bookmark[]
+  hubs      Hub[]
 }
 
 model Role {
@@ -52,30 +53,37 @@ model Article {
   imageCaption    String
   keywords        String
 
-  author String
-  likes    Like[]
-  comments Comment[]
-  shares   Share[]
+  author    String
+  likes     Like[]
+  comments  Comment[]
+  shares    Share[]
   bookmarks Bookmark[]
 }
 
 model Like {
-  ArticleId Int
-  article   Article @relation(fields: [ArticleId], references: [id])
-  UserId    Int
-  user      User    @relation(fields: [UserId], references: [id])
+  id Int @id @default(autoincrement())
 
-  @@id([ArticleId, UserId])
+  ArticleId Int?
+  article   Article? @relation(fields: [ArticleId], references: [id])
+
+  HubId Int?
+  hub   Hub? @relation(fields: [HubId], references: [id])
+
+  UserId Int
+  user   User @relation(fields: [UserId], references: [id])
+
+  @@unique([ArticleId, UserId])
+  @@unique([HubId, UserId])
 }
 
 model Comment {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   content   String
   createdAt DateTime @default(now())
   ArticleId Int
-  article   Article @relation(fields: [ArticleId], references: [id])
+  article   Article  @relation(fields: [ArticleId], references: [id])
   UserId    Int
-  user      User    @relation(fields: [UserId], references: [id])
+  user      User     @relation(fields: [UserId], references: [id])
 }
 
 model Share {
@@ -117,4 +125,13 @@ model SurveyResults {
   survey   Survey        @relation(fields: [SurveyId], references: [id])
   optionId Int
   option   SurveyOptions @relation(fields: [optionId], references: [id])
+}
+
+model Hub {
+  id       Int    @id @default(autoincrement())
+  name     String
+  keywords String
+
+  users User[]
+  likes Like[]
 }
