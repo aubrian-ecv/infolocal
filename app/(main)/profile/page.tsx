@@ -8,6 +8,7 @@ import { dateTz } from "@/lib/date/date-tz";
 import type { PageParams } from "@/types/next";
 import { Suspense } from "react";
 import { SavedPostsList } from "./saved-posts-list";
+import { HubsList } from "./hubs-list";
 
 export default async function RoutePage(props: PageParams<{}>) {
 
@@ -36,7 +37,11 @@ export default async function RoutePage(props: PageParams<{}>) {
           <TabsTrigger value="saved">Sauvegardés</TabsTrigger>
         </TabsList>
         <TabsContent value="comments"></TabsContent>
-        <TabsContent value="hubs"></TabsContent>
+        <TabsContent value="hubs">
+        <Suspense fallback={<Loader />}>
+            <HubsList />
+          </Suspense>
+        </TabsContent>
         <TabsContent value="saved">
           <Suspense fallback={<Loader />}>
             <SavedPostsList />
