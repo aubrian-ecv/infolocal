@@ -7,10 +7,20 @@ import type { PageParams } from "@/types/next";
 import { Dayjs } from "dayjs";
 import Link from "next/link";
 import { ReactComponent as LeftArrow } from "@/assets/icons/leftArrow.svg";
+import { CommentsSection } from "@/components/features/comments/comments-section";
 export default async function RoutePage(props: PageParams<{ articleId: string }>) {
     const article = await prisma.article.findUnique({
         where: {
             "id": parseInt(props.params.articleId)
+        }, 
+        include: {
+            comments: {
+                include: {
+                    answers: true,
+                    user: true,
+                    likes: true
+                }
+            }
         }
     })
 
@@ -60,9 +70,10 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
             {/* Article description */}
             <Typography variant={"p"}>{article.content}</Typography>
 
-            <div className="h-[2px] bg-if_dark w-full mt-2"></div>
+            <div className="h-[2px] bg-if_dark w-full !my-14"></div>
             
             {/* Article comments section */}
+            <CommentsSection comments={article.comments}/>
         </section>
     )
 }
