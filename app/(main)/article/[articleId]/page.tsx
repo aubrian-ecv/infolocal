@@ -1,4 +1,3 @@
-@ -0,0 +1,37 @@
 import { Typography } from "@/components/ui/typography";
 import { prisma } from "@/lib/prisma";
 import type { PageParams } from "@/types/next";
