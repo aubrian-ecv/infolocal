@@ -17,10 +17,6 @@ export type CommentCardProps = {
 }
 
 export const CommentCard = ({ comment }: CommentCardProps) => {
-    if (!comment) {
-        return null
-    }
-
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +52,10 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
                 getTotalLikesForComment(comment).then(setTotalLikes);
             }
         }
+    }
+
+    if (!comment) {
+        return null
     }
 
     return (
