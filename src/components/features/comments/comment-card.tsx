@@ -6,14 +6,14 @@ import { Typography } from "@/components/ui/typography"
 import { dateTz } from "@/lib/date/date-tz"
 import { getLikeStatusForUser, getTotalLikesForComment, likePostComment } from "@/lib/server-actions/post.comment"
 import { cn } from "@/lib/utils"
-import { Comment } from "@prisma/client"
+import { Comment, User } from "@prisma/client"
 import { Dayjs } from "dayjs"
 import { Heart, Loader } from "lucide-react"
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 export type CommentCardProps = {
-    comment: Comment,
+    comment: (Comment & { user: User, _count: { likes: number }, answers: Comment[] }),
 }
 
 export const CommentCard = ({ comment }: CommentCardProps) => {
@@ -22,7 +22,7 @@ export const CommentCard = ({ comment }: CommentCardProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [isLiked, setIsLiked] = useState(false);
-    const [totalLikes, setTotalLikes] = useState(0);
+    const [totalLikes, setTotalLikes] = useState(comment._count.likes);
     useEffect(() => {
         setIsLoading(true);
         new Promise(async (resolve) => {

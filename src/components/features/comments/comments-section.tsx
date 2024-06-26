@@ -1,11 +1,10 @@
-import { prisma } from "@/lib/prisma"
-import { Comment } from "@prisma/client"
-import { CommentCard } from "./comment-card"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Comment, User } from "@prisma/client"
+import { CommentCard } from "./comment-card"
 
 export type CommentsSectionProps = {
-    comments: Comment[],
+    comments: (Comment & { user: User, _count: { likes: number }, answers: Comment[] })[],
 }
 
 export const CommentsSection = ({ comments }: CommentsSectionProps) => {

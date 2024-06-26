@@ -18,7 +18,11 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
                 include: {
                     answers: true,
                     user: true,
-                    likes: true
+                    _count: {
+                        select: {
+                            likes: true
+                        }
+                    }
                 }
             }
         }
