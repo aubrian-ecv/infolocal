@@ -1,9 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import type { User } from "@prisma/client";
-import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 import { prisma } from "../prisma";
-import { credentialsOverrideJwt, credentialsSignInCallback, getCredentialsProvider } from "./credentials-provider";
+import { credentialsSignInCallback, getCredentialsProvider } from "./credentials-provider";
 
 
 export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => ({

@@ -9,10 +9,17 @@ import type { PageParams } from "@/types/next";
 import { Suspense } from "react";
 import { SavedPostsList } from "./saved-posts-list";
 import { HubsList } from "./hubs-list";
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
 export default async function RoutePage(props: PageParams<{}>) {
 
-  const user = await auth();
+  const userSession = await auth();
+  const user = await prisma.user.findUnique({
+    where: {
+        id: parseInt(userSession?.id as unknown as string)
+    }
+})
 
   return (
     <main className="px-5 space-y-6 my-4">
@@ -26,8 +33,10 @@ export default async function RoutePage(props: PageParams<{}>) {
         </div>
       </div>
 
-      <Button variant={"blue"}>
-        Modifier mon profil
+      <Button variant={"blue"} asChild>
+        <Link href="/profile/edit">
+          Modifier mon profil
+        </Link>
       </Button>
 
       <Tabs defaultValue="comments">

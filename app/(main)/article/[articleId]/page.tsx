@@ -21,7 +21,7 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
     return (
         <section className="space-y-6 w-11/12 mx-auto my-2 text-if_dark">
             {/* Go back link */}
-            <Link className="flex" href={'/'}>
+            <Link className="flex" href={'..'}>
                 <LeftArrow className="my-auto" aria-hidden="true" width={16} height={14}/>
                 <p className="ml-3">Retour</p>
             </Link>
