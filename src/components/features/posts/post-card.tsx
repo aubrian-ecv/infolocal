@@ -10,10 +10,11 @@ import Link from "next/link"
 
 export type PostCardProps = {
     article: Article,
-    size?: "small" | "large"
+    size?: "small" | "large",
+    refreshAfterAction?: boolean
 }
 
-export const PostCard = ({ article, size = "small" }: PostCardProps) => {
+export const PostCard = ({ article, size = "small", refreshAfterAction = false }: PostCardProps) => {
     return (
         <div className="bg-if_lightgrey shadow-md p-5 rounded-md space-y-3">
             {
@@ -49,7 +50,7 @@ export const PostCard = ({ article, size = "small" }: PostCardProps) => {
                 />
             </Link>
 
-            <PostCArdActions article={article} />
+            <PostCArdActions article={article} refreshAfterAction={refreshAfterAction} />
         </div>
     )
 }
