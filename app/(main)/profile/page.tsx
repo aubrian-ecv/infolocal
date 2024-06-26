@@ -12,6 +12,7 @@ import { HubsList } from "./hubs-list";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { CommentsList } from "./comments-list";
 
 export default async function RoutePage(props: PageParams<{}>) {
 
@@ -51,7 +52,11 @@ export default async function RoutePage(props: PageParams<{}>) {
           <TabsTrigger value="hubs">Hubs</TabsTrigger>
           <TabsTrigger value="saved">Sauvegardés</TabsTrigger>
         </TabsList>
-        <TabsContent value="comments"></TabsContent>
+        <TabsContent value="comments">
+          <Suspense fallback={<Loader />}>
+            <CommentsList />
+          </Suspense>
+        </TabsContent>
         <TabsContent value="hubs">
           <Suspense fallback={<Loader />}>
             <HubsList />

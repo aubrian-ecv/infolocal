@@ -11,12 +11,24 @@ import { CommentsSection } from "@/components/features/comments/comments-section
 export default async function RoutePage(props: PageParams<{ articleId: string }>) {
     const article = await prisma.article.findUnique({
         where: {
-            "id": parseInt(props.params.articleId)
-        }, 
+            id: parseInt(props.params.articleId)
+        },
         include: {
             comments: {
+                where: {
+                    parentId: null,
+                },
                 include: {
-                    answers: true,
+                    answers: {
+                        include: {
+                            user: true,
+                            _count: {
+                                select: {
+                                    likes: true
+                                }
+                            }
+                        }
+                    },
                     user: true,
                     _count: {
                         select: {
@@ -26,7 +38,7 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
                 }
             }
         }
-    })
+    });
 
     if (!article) {
         return null

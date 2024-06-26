@@ -1,3 +1,4 @@
+import { CommentsSection } from "@/components/features/comments/comments-section";
 import { HubCardActions } from "@/components/features/hubs/hub-card-actions";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/typography";
@@ -56,7 +57,11 @@ export default async function RoutePage(props: PageParams<{ hubId: string }>) {
                 <HubCardActions hub={hub} buttonColor="blue" iconColor="black" />
             </div>
 
-            <hr />
+            <div className="h-[2px] bg-if_dark w-full !my-14"></div>
+
+            <CommentsSection 
+                comments={hub.comments}
+            />
         </main>
     )
 }

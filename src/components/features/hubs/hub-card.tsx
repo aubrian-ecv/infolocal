@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Typography } from "@/components/ui/typography"
 import { Hub, User } from "@prisma/client"
 import { HubCardActions } from "./hub-card-actions"
+import Link from "next/link"
 
 export type HubCardProps = {
     hub: (Hub & { users: User[] })
@@ -25,32 +26,35 @@ export const HubCard = ({ hub }: HubCardProps) => {
                 </ul>
             }
 
-            {
-                hub.users.length > 0 && (
-                    <div className="flex flex-row gap-2 items-center">
-                        <Avatar className="border border-white">
-                            <AvatarImage src={hub.users[0].image ?? "https://github.com/shadcn.png"} />
-                        </Avatar>
-                        {hub.users.length > 1 &&
-                            <Avatar className="-translate-x-5  border border-white">
-                                <AvatarImage src={hub.users[0].image ?? "https://github.com/shadcn.png"} />
-                            </Avatar>
-                        }
-                        <Typography className="text-white" variant="muted">
-                            Rejoignez {hub.users[0].name}
-                            {
-                                hub.users.length > 1 &&
-                                ` + ${hub.users.length - 1} autre${hub.users.length > 2 ? 's' : ''}`
-                            }
-                        </Typography>
-                    </div>
-                )
-            }
+            <div>
+                <Link href={`/hubs/${hub.id}`} className="space-y-3">
+                    {
+                        hub.users.length > 0 && (
+                            <div className="flex flex-row gap-2 items-center">
+                                <Avatar className="border border-white">
+                                    <AvatarImage src={hub.users[0].image ?? "https://github.com/shadcn.png"} />
+                                </Avatar>
+                                {hub.users.length > 1 &&
+                                    <Avatar className="-translate-x-5  border border-white">
+                                        <AvatarImage src={hub.users[0].image ?? "https://github.com/shadcn.png"} />
+                                    </Avatar>
+                                }
+                                <Typography className="text-white" variant="muted">
+                                    Rejoignez {hub.users[0].name}
+                                    {
+                                        hub.users.length > 1 &&
+                                        ` + ${hub.users.length - 1} autre${hub.users.length > 2 ? 's' : ''}`
+                                    }
+                                </Typography>
+                            </div>
+                        )
+                    }
 
-            <Typography variant="h2" className="text-white">
-                {hub.name}
-            </Typography>
-
+                    <Typography variant="h2" className="text-white">
+                        {hub.name}
+                    </Typography>
+                </Link>
+            </div>
 
             <HubCardActions hub={hub} />
         </div>

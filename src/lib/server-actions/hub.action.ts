@@ -90,7 +90,7 @@ export async function joinHubAction(hub: Hub) {
             id: parseInt(user.id as unknown as string),
           },
         },
-      }
+      },
     });
 
     return {
@@ -116,8 +116,8 @@ export async function getUserHubs() {
         },
       },
       include: {
-        users: true
-      }
+        users: true,
+      },
     });
   } catch (e) {
     return [];
@@ -131,11 +131,29 @@ export async function getHubDetails(hubId: number) {
     },
     include: {
       comments: {
+        where: {
+          parentId: null
+        },
         include: {
-          answers: true
-        }
+          answers: {
+            include: {
+              user: true,
+              _count: {
+                select: {
+                  likes: true,
+                },
+              },
+            },
+          },
+          user: true,
+          _count: {
+            select: {
+              likes: true,
+            },
+          },
+        },
       },
-      users: true
-    }
+      users: true,
+    },
   });
 }
