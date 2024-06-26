@@ -11,11 +11,12 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export type HubCardActionsProps = {
-    hub: Hub
+    hub: Hub,
+    buttonColor?: "white" | "blue"
+    iconColor?: "white" | "black"
 }
 
-export const HubCardActions = (props: HubCardActionsProps) => {
-
+export const HubCardActions = ({ hub, buttonColor = "white", iconColor = "white"}: HubCardActionsProps) => {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -26,9 +27,9 @@ export const HubCardActions = (props: HubCardActionsProps) => {
     useEffect(() => {
         setIsLoading(true);
         new Promise(async (resolve) => {
-            const likeStatus = await getLikeStatusForUser(props.hub);
-            const joinStatus = await getJoinStatusForUser(props.hub);
-            const totalLikes = await getTotalLikesForHub(props.hub);
+            const likeStatus = await getLikeStatusForUser(hub);
+            const joinStatus = await getJoinStatusForUser(hub);
+            const totalLikes = await getTotalLikesForHub(hub);
 
             setTotalLikes(totalLikes);
 
@@ -45,7 +46,7 @@ export const HubCardActions = (props: HubCardActionsProps) => {
     }, [])
 
     const likeHub = async () => {
-        const status = await likeHubAction(props.hub);
+        const status = await likeHubAction(hub);
 
         if (status) {
             if (status.error === "NOT_LOGGED_IN") {
@@ -54,21 +55,21 @@ export const HubCardActions = (props: HubCardActionsProps) => {
 
             if (status.success) {
                 setIsLiked(true);
-                getTotalLikesForHub(props.hub).then(setTotalLikes);
+                getTotalLikesForHub(hub).then(setTotalLikes);
             }
         }
     }
 
     const shareHub = async () => {
         await navigator.share({
-            title: props.hub.name,
-            text: props.hub.name,
+            title: hub.name,
+            text: hub.name,
             url: window.location.href
         })
     }
 
     const joinHub = async () => {
-        const status = await joinHubAction(props.hub);
+        const status = await joinHubAction(hub);
 
         if (status) {
             if (status.error === "NOT_LOGGED_IN") {
@@ -84,16 +85,16 @@ export const HubCardActions = (props: HubCardActionsProps) => {
 
     return (
         <div className="flex flex-row">
-            <Button className="bg-white hover:bg-white/90 text-black font-bold font-nohemi" disabled={hasJoined} onClick={joinHub}>
+            <Button variant="blue" className={cn(buttonColor === "white" && "bg-white hover:bg-white/90 text-black", "font-bold font-nohemi")} disabled={hasJoined} onClick={joinHub}>
                 {hasJoined ? "Rejoint" : "Rejoindre"}
             </Button>
 
-            <Button variant={"ghost"} onClick={likeHub} className="space-x-2 text-white hover:bg-transparent hover:text-white">
+            <Button variant={"ghost"} onClick={likeHub} className={cn("space-x-2 hover:bg-transparent", iconColor === "white" && "text-white hover:text-white")}>
                 <Heart className={cn(isLiked && "fill-white")} />
                 <Typography>{isLoading ? <Loader /> : totalLikes}</Typography>
             </Button>
 
-            <Button variant={"ghost"} onClick={shareHub} className="space-x-2 text-white">
+            <Button variant={"ghost"} onClick={shareHub} className={cn("space-x-2", iconColor === "white" && "text-white")}>
                 <Share />
             </Button>
         </div>

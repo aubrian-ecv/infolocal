@@ -69,6 +69,9 @@ model Like {
   HubId Int?
   hub   Hub? @relation(fields: [HubId], references: [id])
 
+  CommentId Int?
+  comment   Comment? @relation(fields: [CommentId], references: [id])
+
   UserId Int
   user   User @relation(fields: [UserId], references: [id])
 
@@ -80,10 +83,21 @@ model Comment {
   id        Int      @id @default(autoincrement())
   content   String
   createdAt DateTime @default(now())
-  ArticleId Int
-  article   Article  @relation(fields: [ArticleId], references: [id])
+
+  likes Like[]
+
+  parentId Int?
+  parent Comment? @relation("CommentToComment", fields: [parentId], references: [id])
+  answers Comment[] @relation("CommentToComment")
+
   UserId    Int
   user      User     @relation(fields: [UserId], references: [id])
+
+  ArticleId Int?
+  article   Article?  @relation(fields: [ArticleId], references: [id])
+
+  HubId Int?
+  hub   Hub? @relation(fields: [HubId], references: [id])
 }
 
 model Share {
@@ -134,4 +148,5 @@ model Hub {
 
   users User[]
   likes Like[]
+  comments Comment[]
 }
