@@ -17,7 +17,7 @@ export const CommentsSection = ({ comments }: CommentsSectionProps) => {
         <section aria-label="Section de commentaires">
             {
                 comments.map((comment) => {
-                    return <CommentCard comment={comment}/>
+                    return <CommentCard key={comment.id} comment={comment}/>
                 })
             }
 
