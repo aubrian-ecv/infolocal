@@ -123,3 +123,19 @@ export async function getUserHubs() {
     return [];
   }
 }
+
+export async function getHubDetails(hubId: number) {
+  return await prisma.hub.findUnique({
+    where: {
+      id: hubId,
+    },
+    include: {
+      comments: {
+        include: {
+          answers: true
+        }
+      },
+      users: true
+    }
+  });
+}
