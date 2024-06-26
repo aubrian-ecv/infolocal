@@ -11,15 +11,21 @@ import { SavedPostsList } from "./saved-posts-list";
 import { HubsList } from "./hubs-list";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 export default async function RoutePage(props: PageParams<{}>) {
 
   const userSession = await auth();
+
+  if (!userSession) {
+    redirect('/auth/signin?callbackUrl=/profile')
+  }
+
   const user = await prisma.user.findUnique({
     where: {
-        id: parseInt(userSession?.id as unknown as string)
+      id: parseInt(userSession?.id as unknown as string)
     }
-})
+  })
 
   return (
     <main className="px-5 space-y-6 my-4">
@@ -47,7 +53,7 @@ export default async function RoutePage(props: PageParams<{}>) {
         </TabsList>
         <TabsContent value="comments"></TabsContent>
         <TabsContent value="hubs">
-        <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Loader />}>
             <HubsList />
           </Suspense>
         </TabsContent>
