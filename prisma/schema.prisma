@@ -35,7 +35,8 @@ model User {
   likes     Like[]
   comments  Comment[]
   bookmarks Bookmark[]
-  hubs      Hub[]
+  hubs      Hub[] @relation("hubsJoined")
+  ownedHubs Hub[] @relation("owner")
 }
 
 model Role {
@@ -146,7 +147,10 @@ model Hub {
   name     String
   keywords String
 
-  users User[]
+  users User[] @relation("hubsJoined")
   likes Like[]
   comments Comment[]
+
+  ownerId Int
+  owner   User @relation("owner", fields: [ownerId], references: [id])
 }
