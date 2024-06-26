@@ -16,7 +16,7 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
 
     console.log(article)
     return (
-        <section className="space-y-6 w-11/12 mx-auto my-2 text-if_black">
+        <section className="space-y-6 w-11/12 mx-auto my-2 text-if_dark">
             {/* Go back link */}
             <Link className="flex" href={'/'}>
                 <LeftArrow className="my-auto" aria-hidden="true" width={16} height={14}/>
@@ -52,12 +52,12 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
             <img src={article?.imageUrl} />
             <PostCArdActions article={article} />
 
-            <div className="h-[2px] bg-if_black w-full mt-2"></div>
+            <div className="h-[2px] bg-if_dark w-full mt-2"></div>
 
             {/* Article description */}
             <Typography variant={"p"}>{article?.content}</Typography>
 
-            <div className="h-[2px] bg-if_black w-full mt-2"></div>
+            <div className="h-[2px] bg-if_dark w-full mt-2"></div>
             
             {/* Article comments section */}
         </section>
