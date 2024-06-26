@@ -11,6 +11,7 @@ export default async function RouteLayout(props: LayoutParams<{  }>) {
                     <li><Link href="/admin">Admin</Link></li>
                     <li><Link href={"/admin/notifications"}>Notifications</Link></li>
                     <li><Link href={"/admin/surveys"}>Sondages</Link></li>
+                    <li><Link href={"/admin/hubs"}>Hubs</Link></li>
                 </ul>
             </nav>
         </aside>

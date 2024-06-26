@@ -1,15 +1,10 @@
-"use client"
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { dateTz } from "@/lib/date/date-tz";
-import { Campaign } from "@/types/campaign";
 import { Survey, SurveyResults } from "@prisma/client";
-import dayjs from "dayjs";
-import { CheckCircleIcon, Clock, Pen } from "lucide-react";
-import { publishSurvey } from "./survey.queries";
 import Link from "next/link";
+import { publishSurvey } from "./survey.queries";
 
 export type SurveyListProps = {
     surveys: (Survey & { results: SurveyResults[] })[]
@@ -21,6 +16,10 @@ export const SurveyList = (props: SurveyListProps) => {
         <div className="mt-8">
             <Typography variant="h2">Sondages</Typography>
             <ul className="space-y-4 my-6" suppressHydrationWarning>
+                {
+                    props.surveys.length === 0 &&
+                    <Typography variant="muted" className="text-center">Aucun sondage</Typography>
+                }
                 {
                     props.surveys.map((survey) => (
                         <li key={survey.id}>
@@ -67,14 +66,4 @@ export const SurveyList = (props: SurveyListProps) => {
             </ul>
         </div>
     )
-}
-
-const CampaignStatus = ({ campaign }: { campaign: Campaign }) => {
-    if (campaign.live) {
-        if (dayjs(campaign.push_time).isBefore(new Date())) {
-            return <CheckCircleIcon color="green" />
-        }
-        return <Clock color="orange" />
-    }
-    return <Pen />
 }
