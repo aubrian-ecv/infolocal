@@ -5,9 +5,11 @@ import Script from "next/script";
 
 export default async function RouteLayout(props: LayoutParams<{  }>) {
   return (
-    <div  className="max-w-screen-sm mx-auto">
+    <div className="max-w-screen-sm mx-auto min-h-screen flex flex-col">
         <Header/>
-        {props.children}
+        <section className="flex-1">
+          {props.children}
+        </section>
         <Script
           src="/batchsdk.js"
         />

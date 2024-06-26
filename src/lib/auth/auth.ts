@@ -1,9 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import type { User } from "@prisma/client";
-import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 import { prisma } from "../prisma";
-import { credentialsOverrideJwt, credentialsSignInCallback, getCredentialsProvider } from "./credentials-provider";
+import { credentialsSignInCallback, getCredentialsProvider } from "./credentials-provider";
 
 
 export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => ({
@@ -22,7 +20,6 @@ export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => (
           id: token.id,
           email: token.email!,
           name: token.name!,
-          image: token.picture!,
           // @ts-ignore
           roles: token.roles.map(role => role.name)
         };
@@ -33,7 +30,7 @@ export const { handlers, signIn, signOut, auth: baseAuth } = NextAuth((req) => (
     jwt({ token, user }) {
       if (user) {
         // @ts-ignore
-        return { ...token, id: user.id, roles: user.roles }; // Save id to token as docs says: https://next-auth.js.org/configuration/callbacks
+        return { ...token, id: user.id, roles: user.roles, picture: "" }; // Save id to token as docs says: https://next-auth.js.org/configuration/callbacks
       }
       return token;
     },

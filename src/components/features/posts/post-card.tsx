@@ -6,13 +6,15 @@ import { Avatar, AvatarImage } from "../../ui/avatar"
 import { Typography } from "../../ui/typography"
 import { PostCArdActions } from "./post-card-actions"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 export type PostCardProps = {
     article: Article,
-    size?: "small" | "large"
+    size?: "small" | "large",
+    refreshAfterAction?: boolean
 }
 
-export const PostCard = ({ article, size = "small" }: PostCardProps) => {
+export const PostCard = ({ article, size = "small", refreshAfterAction = false }: PostCardProps) => {
     return (
         <div className="bg-if_lightgrey shadow-md p-5 rounded-md space-y-3">
             {
@@ -29,7 +31,7 @@ export const PostCard = ({ article, size = "small" }: PostCardProps) => {
                 </ul>
             }
 
-            <div className={cn("flex flex-row", size === "large" && "flex-col")}>
+            <Link href={'/article/' + article.id} className={cn("flex flex-row", size === "large" && "flex-col")}>
                 <div className="space-y-3">
                     <div className="flex flex-row gap-2 items-center">
                         <Avatar>
@@ -44,11 +46,11 @@ export const PostCard = ({ article, size = "small" }: PostCardProps) => {
                     alt={article.imageCaption}
                     width={size === "small" ? 200 : 400}
                     height={size === "small" ? 200 : 300}
-                    className={cn("object-contain", size === "large" && "w-full object-cover")}
+                    className={cn("object-contain rounded-md w-1/3 h-full", size === "large" && "w-full object-cover")}
                 />
-            </div>
+            </Link>
 
-            <PostCArdActions article={article} />
+            <PostCArdActions article={article} refreshAfterAction={refreshAfterAction} />
         </div>
     )
 }

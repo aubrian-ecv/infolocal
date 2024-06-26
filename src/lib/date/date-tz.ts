@@ -10,7 +10,7 @@ dayjs.extend(tz);
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
 
-export const dateTz = (date: string, format?: string, timezone?: string) => {
+export const dateTz = (date: string | Date | undefined, format?: string, timezone?: string) => {
   if (format) {
     return dayjs(date)
       .utc()

@@ -102,3 +102,89 @@ export async function getTotalCommentsForArticle(article: Article) {
 
   return comments;
 }
+
+// ###################################
+// # SAVE ACTIONS
+// ###################################
+
+export async function savePostAction(article: Article) {
+  try {
+    const user = await requiredAuth();
+
+    await prisma.bookmark.create({
+      data: {
+        UserId: parseInt(user.id as unknown as string),
+        ArticleId: article.id,
+      },
+    });
+
+    return {
+      success: true,
+    };
+  } catch (e) {
+    return {
+      error: "NOT_LOGGED_IN",
+    };
+  }
+}
+
+export async function unsavePostAction(article: Article) {
+  try {
+    const user = await requiredAuth();
+
+    await prisma.bookmark.delete({
+      where: {
+        ArticleId_UserId: {
+          ArticleId: article.id,
+          UserId: parseInt(user.id as unknown as string),
+        },
+      },
+    });
+
+    return {
+      success: true,
+    };
+  } catch (e) {
+    return {
+      error: "NOT_LOGGED_IN",
+    };
+  }
+}
+
+export async function getBookmarkStatusForUser(article: Article) {
+  try {
+    const user = await requiredAuth();
+
+    const bookmark = await prisma.bookmark.findFirst({
+      where: {
+        ArticleId: article.id,
+        UserId: parseInt(user.id as unknown as string),
+      },
+    });
+
+    return !!bookmark;
+  } catch (_) {
+    return false;
+  }
+}
+
+export async function getUserSavedPosts() {
+  try {
+    const user = await requiredAuth();
+
+    const savedPosts = await prisma.bookmark.findMany({
+      where: {
+        UserId: parseInt(user.id as unknown as string),
+      },
+      include: {
+        article: true
+      }
+    });
+
+    return savedPosts;
+  } catch (e) {
+    return {
+      error: "NOT_LOGGED_IN",
+    };
+  }
+}
