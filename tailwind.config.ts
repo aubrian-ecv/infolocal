@@ -39,7 +39,8 @@ const config = {
         if_blue: "#0854E8",
         if_yellow: "#E7D110",
         if_lightgrey: "#F3F8FF",
-        if_darkblue: "#073081"
+        if_darkblue: "#073081",
+        if_black: "#070F1E"
       },
       fontFamily: {
         nohemi: ["Nohemi", "sans-serif"],
