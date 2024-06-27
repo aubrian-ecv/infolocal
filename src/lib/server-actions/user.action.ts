@@ -1,6 +1,7 @@
 "use server"
 
 import { EditUserFormType } from "../../../app/(main)/profile/edit/edituser.schema";
+import { signOut } from "../auth/auth";
 import { requiredAuth } from "../auth/helper";
 import { prisma } from "../prisma";
 
@@ -63,4 +64,11 @@ export async function getUserData() {
     } catch (e: any) {
         return null;
     }
+}
+
+export async function signOutAction() {
+    await signOut({
+        redirect: true,
+        redirectTo: "/"
+    });
 }

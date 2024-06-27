@@ -43,7 +43,7 @@ export const SignInCredentialsForm = () => {
                 name="email"
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel>Votre adresse mail</FormLabel>
                         <FormControl>
                             <Input placeholder="john@doe.com" {...field} />
                         </FormControl>
@@ -56,7 +56,7 @@ export const SignInCredentialsForm = () => {
                 name="password"
                 render={({ field }) => (
                     <FormItem className="flex-1">
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel>Votre mot de passe</FormLabel>
                         <FormControl>
                             <Input type="password" {...field} />
                         </FormControl>
@@ -65,7 +65,7 @@ export const SignInCredentialsForm = () => {
                 )}
             />
             <Button type="submit" className="w-full">
-                Login with Password
+                Me connecter
             </Button>
         </Form>
     );

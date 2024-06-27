@@ -1,3 +1,4 @@
+import { LogoutButton } from "@/components/features/logout-button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -5,18 +6,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Typography } from "@/components/ui/typography";
 import { auth } from "@/lib/auth/helper";
 import { dateTz } from "@/lib/date/date-tz";
-import type { PageParams } from "@/types/next";
-import { Suspense } from "react";
-import { SavedPostsList } from "./saved-posts-list";
-import { HubsList } from "./hubs-list";
-import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import type { PageParams } from "@/types/next";
+import { User } from "@prisma/client";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { CommentsList } from "./comments-list";
+import { HubsList } from "./hubs-list";
+import { SavedPostsList } from "./saved-posts-list";
 
 export default async function RoutePage(props: PageParams<{}>) {
 
-  const userSession = await auth();
+  const userSession = await auth() as (User & { roles: string[] }) | null;
 
   if (!userSession) {
     redirect('/auth/signin?callbackUrl=/profile')
@@ -38,6 +40,8 @@ export default async function RoutePage(props: PageParams<{}>) {
           <Typography className="font-bold">{user?.name}</Typography>
           <Typography variant="muted">Membre depuis {dateTz(user?.createdAt, "YYYY") as string}</Typography>
         </div>
+
+        <LogoutButton />
       </div>
 
       <Button variant={"blue"} asChild>
@@ -45,6 +49,15 @@ export default async function RoutePage(props: PageParams<{}>) {
           Modifier mon profil
         </Link>
       </Button>
+
+      {
+        userSession.roles.includes('SUPERADMIN') &&
+        <Button variant={"link"} asChild className="text-if_blue underline">
+          <Link href="/admin">
+            Aller sur le backoffice
+          </Link>
+        </Button>
+      }
 
       <Tabs defaultValue="comments">
         <TabsList>

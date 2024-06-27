@@ -1,5 +1,5 @@
 import { dateTz } from "@/lib/date/date-tz"
-import { Article } from "@prisma/client"
+import { Article, User } from "@prisma/client"
 import { Dayjs } from "dayjs"
 import Image from "next/image"
 import { Avatar, AvatarImage } from "../../ui/avatar"
@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 export type PostCardProps = {
-    article: Article,
+    article: (Article & { author: User }),
     size?: "small" | "large",
     refreshAfterAction?: boolean
 }
@@ -35,9 +35,9 @@ export const PostCard = ({ article, size = "small", refreshAfterAction = false }
                 <div className="space-y-3">
                     <div className="flex flex-row gap-2 items-center">
                         <Avatar>
-                            <AvatarImage src="https://github.com/shadcn.png" />
+                            <AvatarImage src={article.author.image ?? "https://github.com/shadcn.png"} />
                         </Avatar>
-                        <Typography>{article.author} - {(dateTz(article.publicationDate.toString()) as Dayjs).from(new Date())}</Typography>
+                        <Typography>{article.author.name} - {(dateTz(article.publicationDate.toString()) as Dayjs).from(new Date())}</Typography>
                     </div>
                     <Typography variant="h2" className="text-lg">{article.title}</Typography>
                 </div>

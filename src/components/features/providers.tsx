@@ -2,7 +2,6 @@
 
 import { queryClient } from "@/lib/reactquery";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SessionProvider } from "next-auth/react";
 
 export type ProvidersProps = {
@@ -14,7 +13,6 @@ export const Providers = (props: ProvidersProps) => {
         <SessionProvider>
             <QueryClientProvider client={queryClient}>
                 {props.children}
-                <ReactQueryDevtools />
             </QueryClientProvider>
         </SessionProvider>
     )
