@@ -1,16 +1,15 @@
 import { hashStringWithSalt } from "@/lib/auth/credentials-provider";
 import { prisma } from "@/lib/prisma";
-import { Article } from "@prisma/client";
 import { XMLParser } from "fast-xml-parser";
 
 export async function GET(request: Request) {
-  // if (
-  //   request.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
-  // ) {
-  //   return new Response(JSON.stringify("Unauthorized", null, 2), {
-  //     status: 401,
-  //   });
-  // }
+  if (
+    request.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return new Response(JSON.stringify("Unauthorized", null, 2), {
+      status: 401,
+    });
+  }
   const xmlData = await fetch(
     "https://www.lavoixdunord.fr/sites/default/files/sitemaps/www_lavoixdunord_fr/sitemapnews-0.xml"
   );
