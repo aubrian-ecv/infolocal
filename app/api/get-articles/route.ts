@@ -2,7 +2,13 @@ import { prisma } from "@/lib/prisma";
 import { XMLParser } from "fast-xml-parser";
 
 export async function GET(request: Request) {
-  const r = request.url;
+  if (
+    request.headers.get("Authorization") !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
+    return new Response(JSON.stringify("Unauthorized", null, 2), {
+      status: 401,
+    });
+  }
   const xmlData = await fetch(
     "https://www.lavoixdunord.fr/sites/default/files/sitemaps/www_lavoixdunord_fr/sitemapnews-0.xml"
   );
@@ -16,9 +22,17 @@ export async function GET(request: Request) {
       status: 500,
     });
 
+  const existingArticles = (await prisma.article.findMany()).flatMap(
+    (article) => article.title
+  );
+
   // await prisma.$queryRaw`TRUNCATE TABLE Article;`;
   const importStatus = await prisma.article.createMany({
     data: jsonObj.urlset.url
+      .filter(
+        (articleData: any) =>
+          !existingArticles.includes(articleData["news:news"]["news:title"])
+      )
       .filter(
         (articleData: any) =>
           articleData["image:image"]?.["image:loc"] &&
@@ -31,7 +45,8 @@ export async function GET(request: Request) {
         imageUrl: articleData["image:image"]["image:loc"],
         imageCaption: articleData["image:image"]["image:caption"] + "",
         keywords: articleData["news:news"]?.["news:keywords"] ?? "",
-        author: articleData["news:news"]?.["news:publication"]["news:name"] ?? "",
+        author:
+          articleData["news:news"]?.["news:publication"]["news:name"] ?? "",
       })),
   });
 
