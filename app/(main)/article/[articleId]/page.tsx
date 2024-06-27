@@ -14,6 +14,7 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
             id: parseInt(props.params.articleId)
         },
         include: {
+            author: true,
             comments: {
                 where: {
                     parentId: null,
@@ -34,7 +35,7 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
                         select: {
                             likes: true
                         }
-                    }
+                    },
                 }
             }
         }
@@ -72,7 +73,7 @@ export default async function RoutePage(props: PageParams<{ articleId: string }>
                 <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" />
                 </Avatar>
-                <Typography>{article.author} - {(dateTz(article.publicationDate.toString()) as Dayjs).from(new Date())}</Typography>
+                <Typography>{article.author.name} - {(dateTz(article.publicationDate.toString()) as Dayjs).from(new Date())}</Typography>
             </div>
 
 

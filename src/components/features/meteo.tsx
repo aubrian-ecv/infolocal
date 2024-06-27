@@ -6,6 +6,8 @@ import { Typography } from "../ui/typography";
 import { dateTz } from "@/lib/date/date-tz";
 import { ReactComponent as DayIcon } from "@/assets/icons/animated/weather/day.svg";
 import { ReactComponent as CloudyDayIcon } from "@/assets/icons/animated/weather/cloudy-day-1.svg";
+import { ReactComponent as CloudyDay2Icon } from "@/assets/icons/animated/weather/cloudy-day-2.svg";
+import { ReactComponent as CloudyDay3Icon } from "@/assets/icons/animated/weather/cloudy-day-3.svg";
 import { ReactComponent as Cloudy } from "@/assets/icons/animated/weather/cloudy.svg";
 
 export type MeteoProps = {
@@ -58,7 +60,9 @@ const MeteoWeatherIcon = (props: { weather: number }) => {
 
     if (props.weather === 0) return <DayIcon />
     if (props.weather === 1) return <CloudyDayIcon />
-    if (props.weather === 3) return <Cloudy />
+    if (props.weather === 2) return <CloudyDay2Icon />
+    if (props.weather === 3) return <CloudyDay3Icon />
+    if (props.weather === 4) return <Cloudy />
 
     return props.weather
 }

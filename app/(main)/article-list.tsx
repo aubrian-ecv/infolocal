@@ -10,6 +10,9 @@ export const ArticleList = async (props: ArticleListProps) => {
         take: 4,
         orderBy: {
             publicationDate: 'desc'
+        },
+        include: {
+            author: true
         }
     })
 

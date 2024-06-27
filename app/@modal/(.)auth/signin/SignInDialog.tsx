@@ -3,6 +3,7 @@
 import { Credenza, CredenzaBody, CredenzaContent, CredenzaDescription, CredenzaHeader, CredenzaTitle } from '@/components/ui/credenza';
 import { usePathname, useRouter } from 'next/navigation';
 import { SignInCredentialsForm } from '../../../auth/signin/SignInCredentialsForm';
+import Image from 'next/image';
 
 export function SignInDialog() {
 
@@ -20,9 +21,9 @@ export function SignInDialog() {
     >
       <CredenzaContent>
         <CredenzaHeader>
-          <CredenzaTitle>Login</CredenzaTitle>
-          <CredenzaDescription>
-            A responsive modal component for shadcn/ui.
+          <CredenzaTitle>Connexion</CredenzaTitle>
+          <CredenzaDescription className='flex items-center justify-center'>
+            <Image src="/static/img/infolocal-small-blue.svg" width={"100"} height={"40"} alt='InfoLocal+' />
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody>
