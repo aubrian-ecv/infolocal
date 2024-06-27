@@ -1,6 +1,5 @@
 import { hashStringWithSalt } from "@/lib/auth/credentials-provider";
 import { prisma } from "@/lib/prisma";
-import { Article } from "@prisma/client";
 import { XMLParser } from "fast-xml-parser";
 
 export async function GET(request: Request) {
