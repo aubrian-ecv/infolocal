@@ -55,7 +55,7 @@ export default async function RoutePage(props: PageParams<{}>) {
                                             <Typography variant="muted">Publié le {dateTz(article.publicationDate, "DD MMMM YYYY") as string}</Typography>
                                             <Button variant="outline" asChild>
                                                 <Link href={"/admin/articles/" + article.id}>
-                                                    Voir l'article
+                                                    Voir l&apos;article
                                                 </Link>
                                             </Button>
                                         </div>
