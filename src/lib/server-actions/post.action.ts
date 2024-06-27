@@ -177,7 +177,11 @@ export async function getUserSavedPosts() {
         UserId: parseInt(user.id as unknown as string),
       },
       include: {
-        article: true
+        article: {
+          include: {
+            author: true,
+          }
+        }
       }
     });
 
