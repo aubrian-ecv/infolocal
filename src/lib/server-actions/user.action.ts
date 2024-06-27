@@ -50,3 +50,17 @@ export async function updateUser(values: EditUserFormType) {
         };
     }
 }
+
+export async function getUserData() {
+    try {
+        const user = await requiredAuth();
+
+        return await prisma.user.findUnique({
+            where: {
+                id: parseInt(user.id as unknown as string),
+            }
+        });
+    } catch (e: any) {
+        return null;
+    }
+}
